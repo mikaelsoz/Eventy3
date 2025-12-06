@@ -2,6 +2,7 @@ node_modules/
 iphone-3d-react/node_modules/
 iphone-3d-react/build/
 iphone-embed/
+build/
 .netlify/
 .DS_Store
 .env
