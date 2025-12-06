@@ -1,0 +1,12 @@
+[build]
+command = "npm run build"
+publish = "."
+
+[build.environment]
+NODE_VERSION = "20"
+
+[[redirects]]
+from = "/iphone-embed/*"
+to = "/iphone-embed/index.html"
+status = 200
+

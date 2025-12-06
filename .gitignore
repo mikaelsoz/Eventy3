@@ -1,0 +1,14 @@
+node_modules/
+iphone-3d-react/node_modules/
+iphone-3d-react/build/
+iphone-embed/
+.netlify/
+.DS_Store
+.env
+.env.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+

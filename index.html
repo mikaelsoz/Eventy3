@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Eventy3 - Transforme cada evento em uma experiência inesquecível. Gestão de ingressos, voluntários e check-in integrado ao WhatsApp.">
+    <meta name="keywords"
+        content="gestão de eventos igreja, sistema eventos, Eventy3, check-in qr code, voluntários, ingressos online">
+    <meta name="author" content="Eventy3">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://eventy3.com.br/">
+    <meta property="og:title" content="Eventy3 | Gestão de Eventos para Igrejas">
+    <meta property="og:description"
+        content="Transforme cada evento em uma experiência inesquecível. Gestão de ingressos, voluntários e check-in integrado ao WhatsApp.">
+    <meta property="og:image" content="assets/images/hero.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://eventy3.com.br/">
+    <meta property="twitter:title" content="Eventy3 | Gestão de Eventos para Igrejas">
+    <meta property="twitter:description"
+        content="Transforme cada evento em uma experiência inesquecível. Gestão de ingressos, voluntários e check-in integrado ao WhatsApp.">
+    <meta property="twitter:image" content="assets/images/hero.png">
+
+    <!-- SEO & Favicon -->
+    <link rel="canonical" href="https://eventy3.com.br/">
+    <meta name="robots" content="index, follow">
+    <link rel="icon" href="assets/images/logo.png" type="image/png">
+    <link rel="shortcut icon" href="assets/images/logo.png" type="image/png">
+
+    <title>Eventy3 | Gestão de Eventos para Igrejas</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Eventy3",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "BRL"
+      },
+      "description": "Gestão de eventos para igrejas. Ingressos, voluntários e check-in integrado ao WhatsApp.",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "ratingCount": "150"
+      }
+    }
+    </script>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container header-inner">
+            <a href="#" class="logo">
+                <img src="assets/images/logo.png" alt="Eventy3" class="logo-img">
+            </a>
+
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <i class="ri-menu-line"></i>
+            </button>
+
+            <nav class="nav-menu">
+                <a href="#servicos" class="nav-link">Funcionalidades</a>
+                <a href="#planos" class="nav-link">Planos</a>
+                <a href="#ecosystem" class="nav-link">Ecossistema</a>
+                <a href="#contato" class="nav-link">Contato</a>
+                <a href="#contato" class="btn btn-ghost">Falar com Especialista</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container hero-grid">
+            <div class="hero-content fade-in">
+                <h1 class="hero-title">Organize Eventos Cristãos com <span class="reveal-container"><span
+                            class="text-gradient reveal-text">Excelência</span></span></h1>
+                <p class="hero-subtitle">Crie páginas, venda ingressos pelo WhatsApp e gerencie check-in e finanças em
+                    uma única plataforma.</p>
+
+                <div class="hero-cta-group">
+                    <a href="#planos" class="btn btn-primary">
+                        Criar Evento Grátis <i class="ri-arrow-right-line"></i>
+                    </a>
+                    <a href="#contato" class="btn btn-secondary">
+                        Agendar Demo
+                    </a>
+                </div>
+
+                <div class="trust-indicators">
+                    <div class="trust-item"><i class="ri-check-double-line"></i> +50.000 eventos realizados</div>
+                    <div class="trust-item"><i class="ri-check-double-line"></i> Check-in via QR Code
+                    </div>
+                    <div class="trust-item"><i class="ri-check-double-line"></i> Gestão de Voluntários</div>
+                </div>
+            </div>
+
+            <div class="hero-image fade-in hero-cube-container-style" id="ticket-wrapper">
+                <div id="ticket-container"></div>
+            </div>
+    </section>
+
+    <!-- Three.js Dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="js/ticket-3d.js"></script>
+    </section>
+
+
+    <!-- PROBLEM -->
+    <section class="section-padding problem-section bg-white">
+        <div class="container">
+            <div class="text-center fade-in">
+                <h2>Os Desafios Que <span class="text-gradient">Transformam Eventos em Caos</span></h2>
+                <p class="problem-subtitle">Caos operacional, vendas complicadas e filas intermináveis. Organize com
+                    excelência e foque no propósito, não na logística.</p>
+            </div>
+
+            <div class="grid problem-grid">
+                <div class="problem-card fade-in">
+                    <span class="problem-icon"><i class="ri-file-list-3-line icon-blue"></i></span>
+                    <h3>Caos operacional em eventos</h3>
+                    <p>Falta de checklists, controle de voluntários disperso e organização caótica no dia do evento.</p>
+                </div>
+                <div class="problem-card fade-in">
+                    <span class="problem-icon"><i class="ri-group-line icon-blue"></i></span>
+                    <h3>Venda de ingressos complicada</h3>
+                    <p>Métodos dispersos, baixa conversão e dificuldade para acompanhar vendas em tempo real.</p>
+                </div>
+                <div class="problem-card fade-in">
+                    <span class="problem-icon"><i class="ri-ticket-line icon-blue"></i></span>
+                    <h3>Check-in lento e filas no dia do evento</h3>
+                    <p>Entradas demoradas, confusão na porta e falta de controle sobre quem entrou.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOLUTION -->
+    <section class="section-padding solution-section bg-light">
+        <div class="container">
+            <div class="text-center fade-in">
+                <h2>Como Organizar Eventos <span class="text-gradient">Sem Complicação</span></h2>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker">1</div>
+                    <div class="timeline-content">
+                        <h3>Crie páginas de evento</h3>
+                        <p>Página personalizada mobile-first pronta em minutos com todos os detalhes do evento.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">2</div>
+                    <div class="timeline-content">
+                        <h3>Venda direto pelo WhatsApp</h3>
+                        <p>Checkout integrado, familiar ao público e com confirmação automática de pagamento.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">3</div>
+                    <div class="timeline-content">
+                        <h3>Gerencie voluntários</h3>
+                        <p>Escalas, funções e lembretes automáticos para sua equipe.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">4</div>
+                    <div class="timeline-content">
+                        <h3>Check-in por QR code</h3>
+                        <p>Entrada rápida e segura com código único para cada participante.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker">5</div>
+                    <div class="timeline-content">
+                        <h3>Relatórios e métricas</h3>
+                        <p>Receita por evento, taxa de conversão e participação detalhada em tempo real.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center fade-in mt-xl">
+                <a href="#planos" class="btn btn-primary">Criar Evento Grátis</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="servicos" class="section-padding bg-white">
+        <div class="container">
+            <div class="text-center fade-in">
+                <h2>Funcionalidades Completas Para <span class="text-gradient">Eventos Perfeitos</span></h2>
+            </div>
+
+            <div class="grid services-grid">
+                <div class="service-card fade-in">
+                    <div class="service-icon"><i class="ri-ticket-2-line"></i></div>
+                    <h3>Gestão de Ingressos</h3>
+                    <ul class="service-list">
+                        <li><i class="ri-check-line"></i> Venda online e presencial</li>
+                        <li><i class="ri-check-line"></i> QR Code automático</li>
+                        <li><i class="ri-check-line"></i> Categorias (VIP, normal)</li>
+                        <li><i class="ri-check-line"></i> Pagamento via PIX/Cartão</li>
+                    </ul>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon"><i class="ri-calendar-todo-line"></i></div>
+                    <h3>Programação & Cronograma</h3>
+                    <ul class="service-list">
+                        <li><i class="ri-check-line"></i> Timeline visual</li>
+                        <li><i class="ri-check-line"></i> Notificações automáticas</li>
+                        <li><i class="ri-check-line"></i> Avisos para equipe</li>
+                        <li><i class="ri-check-line"></i> Countdown</li>
+                    </ul>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon"><i class="ri-team-line"></i></div>
+                    <h3>Gestão de Voluntários</h3>
+                    <ul class="service-list">
+                        <li><i class="ri-check-line"></i> Escalas por função</li>
+                        <li><i class="ri-check-line"></i> Confirmação via WhatsApp</li>
+                        <li><i class="ri-check-line"></i> Substituições rápidas</li>
+                        <li><i class="ri-check-line"></i> Certificados automáticos</li>
+                    </ul>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon"><i class="ri-qr-scan-2-line"></i></div>
+                    <h3>Check-in & Controle</h3>
+                    <ul class="service-list">
+                        <li><i class="ri-check-line"></i> QR Code scanner</li>
+                        <li><i class="ri-check-line"></i> Lista digital</li>
+                        <li><i class="ri-check-line"></i> Controle de entrada</li>
+                        <li><i class="ri-check-line"></i> Relatório de frequência</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="planos" class="section-padding pricing-section bg-light">
+        <div class="container">
+            <div class="text-center fade-in">
+                <h2>Escolha Seu Plano e <span class="text-gradient">Comece a Criar Memórias</span></h2>
+                <p class="mt-sm text-secondary">Transparente. Sem taxas escondidas.
+                    Cancele quando quiser.</p>
+            </div>
+
+            <div class="grid pricing-grid">
+                <!-- Gratuito -->
+                <div class="pricing-card fade-in">
+                    <div class="badge badge-secondary">Para começar</div>
+                    <div class="pricing-header">
+                        <h3>Gratuito</h3>
+                        <div class="price">R$ 0<span>/para sempre</span></div>
+                    </div>
+                    <ul class="benefits-list">
+                        <li><i class="ri-checkbox-circle-fill"></i> Criar eventos ilimitados</li>
+                        <li><i class="ri-checkbox-circle-fill"></i> Publicar páginas de evento</li>
+                        <li><i class="ri-checkbox-circle-fill"></i> Compartilhar links</li>
+                        <li><i class="ri-checkbox-circle-fill"></i> Suporte por email</li>
+                    </ul>
+                    <a href="#contato" class="btn btn-outline w-full">Começar Grátis</a>
+                </div>
+
+                <!-- Pro (Destaque) -->
+                <div class="pricing-card featured fade-in">
+                    <div class="badge">MAIS ESCOLHIDO</div>
+                    <div class="pricing-header">
+                        <h3 class="text-gradient">Pro</h3>
+                        <div class="price">6,5%<span>/por ingresso vendido</span></div>
+                        <p class="mt-xs plan-highlight">
+                            Para vender</p>
+                    </div>
+                    <ul class="benefits-list">
+                        <li><i class="ri-checkbox-circle-fill"></i> Tudo do plano Gratuito</li>
+                        <li><i class="ri-checkbox-circle-fill"></i> Vendas via WhatsApp automatizadas</li>
+                        <li><i class="ri-checkbox-circle-fill"></i> Pagamentos seguros</li>
+                        <li><i class="ri-checkbox-circle-fill"></i> Dashboard de vendas em tempo real</li>
+                        <li><i class="ri-checkbox-circle-fill"></i> Relatórios completos</li>
+                        <li><i class="ri-checkbox-circle-fill"></i> Suporte prioritário</li>
+                    </ul>
+                    <a href="#contato" class="btn btn-primary w-full">Começar a Vender</a>
+                </div>
+
+                <!-- Organizador Parceiro -->
+                <div class="pricing-card fade-in">
+                    <div class="badge badge-indigo">Abençoe mais</div>
+                    <div class="pricing-header">
+                        <h3>Organizador Parceiro</h3>
+                        <div class="price">0,5%<span>/cashback a partir do 4º evento</span></div>
+                        <p class="mt-xs plan-highlight-indigo">
+                            Para igrejas parceiras</p>
+                    </div>
+                    <ul class="benefits-list">
+                        <li><i class="ri-star-fill icon-gold"></i> Tudo do plano Pro</li>
+                        <li><i class="ri-star-fill icon-gold"></i> Cashback para sua igreja</li>
+                        <li><i class="ri-star-fill icon-gold"></i> Consultoria para eventos</li>
+                        <li><i class="ri-star-fill icon-gold"></i> Materiais exclusivos</li>
+                        <li><i class="ri-star-fill icon-gold"></i> Selo de Igreja Parceira</li>
+                    </ul>
+                    <a href="#contato" class="btn btn-outline w-full">Ser Parceiro</a>
+                </div>
+            </div>
+
+            <div class="text-center mt-lg">
+                <p>Não sabe qual escolher? <a href="#contato" class="link-highlight">Fale
+                        conosco</a> para recomendação personalizada.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOCIAL PROOF -->
+    <section id="depoimentos" class="section-padding bg-white">
+        <div class="container">
+            <div class="text-center fade-in">
+                <h2>Eventos Que <span class="text-gradient">Marcaram História</span></h2>
+            </div>
+
+            <div class="marquee-container">
+                <div class="marquee-wrapper">
+                    <!-- First set -->
+                    <div class="testimonial-card">
+                        <p class="quote">"Nossa conferência anual nunca foi tão organizada. O check-in levou minutos,
+                            não horas!"</p>
+                        <div class="author">
+                            <div class="author-avatar">PM</div>
+                            <div>
+                                <strong>Pr. Marcos</strong><br>
+                                <span class="author-role">Igreja Fonte Viva</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="quote">"Vendemos 800 ingressos pelo WhatsApp. A experiência foi impecável do começo ao
+                            fim."</p>
+                        <div class="author">
+                            <div class="author-avatar">AP</div>
+                            <div>
+                                <strong>Ana Paula</strong><br>
+                                <span class="author-role">Coordenadora de Eventos</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="quote">"Os voluntários finalmente sabiam onde estar e quando. Zero confusão."</p>
+                        <div class="author">
+                            <div class="author-avatar">PR</div>
+                            <div>
+                                <strong>Pr. Roberto</strong><br>
+                                <span class="author-role">Comunidade Luz das Nações</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Second set (duplicate for seamless loop) -->
+                    <div class="testimonial-card">
+                        <p class="quote">"Nossa conferência anual nunca foi tão organizada. O check-in levou minutos,
+                            não horas!"</p>
+                        <div class="author">
+                            <div class="author-avatar">PM</div>
+                            <div>
+                                <strong>Pr. Marcos</strong><br>
+                                <span class="author-role">Igreja Fonte Viva</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="quote">"Vendemos 800 ingressos pelo WhatsApp. A experiência foi impecável do começo ao
+                            fim."</p>
+                        <div class="author">
+                            <div class="author-avatar">AP</div>
+                            <div>
+                                <strong>Ana Paula</strong><br>
+                                <span class="author-role">Coordenadora de Eventos</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="quote">"Os voluntários finalmente sabiam onde estar e quando. Zero confusão."</p>
+                        <div class="author">
+                            <div class="author-avatar">PR</div>
+                            <div>
+                                <strong>Pr. Roberto</strong><br>
+                                <span class="author-role">Comunidade Luz das Nações</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="metrics-grid fade-in">
+                <div class="metric-item">
+                    <h3 class="counter" data-target="50000" data-prefix="+" data-suffix="">0</h3>
+                    <p>Eventos Realizados</p>
+                </div>
+                <div class="metric-item">
+                    <h3 class="counter" data-target="2" data-prefix="+" data-suffix="M">0</h3>
+                    <p>Ingressos Emitidos</p>
+                </div>
+                <div class="metric-item">
+                    <h3 class="counter" data-target="98" data-prefix="" data-suffix="%">0</h3>
+                    <p>Taxa de Satisfação</p>
+                </div>
+                <div class="metric-item">
+                    <h3 class="counter" data-target="15000" data-prefix="+" data-suffix="">0</h3>
+                    <p>Voluntários Organizados</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section-padding bg-light">
+        <div class="container">
+            <div class="text-center fade-in">
+                <h2>Perguntas <span class="text-gradient">Frequentes</span></h2>
+            </div>
+
+            <div class="faq-container">
+                <div class="faq-item fade-in">
+                    <button class="faq-question">
+                        Posso vender ingressos pagos?
+                        <i class="ri-arrow-down-s-line"></i>
+                    </button>
+                    <div class="faq-answer">
+                        Sim — integração completa com gateways de pagamento e checkout direto via WhatsApp para
+                        facilitar a conversão.
+                    </div>
+                </div>
+                <div class="faq-item fade-in">
+                    <button class="faq-question">
+                        O check-in funciona offline?
+                        <i class="ri-arrow-down-s-line"></i>
+                    </button>
+                    <div class="faq-answer">
+                        Temos opções de check-in que funcionam com conexão mínima; recomendamos pré-sincronizar os dados
+                        para garantir agilidade.
+                    </div>
+                </div>
+                <div class="faq-item fade-in">
+                    <button class="faq-question">
+                        Como recebo o dinheiro das vendas?
+                        <i class="ri-arrow-down-s-line"></i>
+                    </button>
+                    <div class="faq-answer">
+                        Integração com provedores de pagamento seguros. Além disso, oferecemos relatórios completos e
+                        conciliação para sua tesouraria (integração ML3).
+                    </div>
+                </div>
+                <div class="faq-item fade-in">
+                    <button class="faq-question">
+                        Tem suporte no dia do evento?
+                        <i class="ri-arrow-down-s-line"></i>
+                    </button>
+                    <div class="faq-answer">
+                        Sim — nossos planos premium incluem suporte prioritário e onboarding dedicado para garantir que
+                        tudo saia perfeito.
+                    </div>
+                </div>
+                <div class="faq-item fade-in">
+                    <button class="faq-question">
+                        Quantos voluntários posso cadastrar?
+                        <i class="ri-arrow-down-s-line"></i>
+                    </button>
+                    <div class="faq-answer">
+                        Ilimitados! Você pode organizar quantas equipes precisar, definir líderes e criar escalas
+                        específicas para cada evento.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <!-- GALAXY ECOSYSTEM (REBUILT) -->
+    <section id="ecosystem" class="galaxy-section">
+
+        <!-- Background Atmosphere -->
+        <div class="galaxy-bg"></div>
+        <div class="stars"></div>
+        <div class="container">
+            <div class="text-center fade-in mb-4rem relative-z2">
+                <h2>Um Ecossistema Completo <span class="text-gradient">Para Sua Igreja</span></h2>
+                <p class="mt-sm text-secondary">Soluções integradas que conversam entre si para simplificar cada área do
+                    seu ministério.</p>
+            </div>
+
+            <div class="solar-system fade-in">
+                <!-- Orbit Rings -->
+                <div class="orbit-ring ring-1"></div>
+                <div class="orbit-ring ring-2"></div>
+
+                <!-- Sun (Center) -->
+                <div class="sun planet" onclick="openModal('cristao-valor')">
+                    <div class="sun-glow"></div>
+                    <div class="planet-core">
+                        <i class="ri-sun-line"></i>
+                        <span>CRISTÃO<br>DE VALOR</span>
+                    </div>
+                </div>
+
+                <!-- Planets -->
+                <div class="planet p-ml3" onclick="openModal('ml3')">
+                    <div class="planet-body">
+                        <i class="ri-line-chart-line"></i>
+                    </div>
+                    <div class="planet-label">ML3 Financeiro</div>
+                </div>
+
+                <div class="planet p-eventy3" onclick="openModal('eventy3')">
+                    <div class="planet-body">
+                        <i class="ri-calendar-event-line"></i>
+                    </div>
+                    <div class="planet-label">Eventy3</div>
+                    <div class="you-are-here">VOCÊ ESTÁ AQUI</div>
+                </div>
+
+                <div class="planet p-crie3" onclick="openModal('crie3')">
+                    <div class="planet-body">
+                        <i class="ri-palette-line"></i>
+                    </div>
+                    <div class="planet-label">Crie3</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section id="contato" class="contact-section">
+        <div class="container">
+            <div class="contact-header fade-in">
+                <div class="contact-icon">
+                    <i class="ri-calendar-check-line"></i>
+                </div>
+                <h2>Crie Seu Primeiro Evento</h2>
+                <h2 class="contact-title-highlight">Grátis por 14 Dias</h2>
+                <p class="contact-subtitle">Sem cartão de crédito. Cancele quando quiser. Comece hoje mesmo.</p>
+            </div>
+
+            <div class="contact-form-card fade-in">
+                <form class="contact-form" id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group-full">
+                            <label for="name">Nome Completo</label>
+                            <input type="text" id="name" placeholder="Seu nome" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group-full">
+                            <label for="whatsapp-contact">WhatsApp com DDD</label>
+                            <input type="tel" id="whatsapp-contact" placeholder="(00) 00000-0000" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row form-row-split">
+                        <div class="form-group-half">
+                            <label for="church">Nome da Igreja</label>
+                            <input type="text" id="church" placeholder="Nome da sua igreja" required>
+                        </div>
+                        <div class="form-group-half">
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" placeholder="seu@email.com" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group-full">
+                            <label for="event-type">Que tipo de evento você mais realiza?</label>
+                            <select id="event-type" required>
+                                <option value="" disabled selected>Selecione uma opção</option>
+                                <option value="cultos">Cultos Especiais</option>
+                                <option value="conferencias">Conferências e Congressos</option>
+                                <option value="retiros">Retiros e Acampamentos</option>
+                                <option value="celebracoes">Celebrações e Festividades</option>
+                                <option value="workshops">Workshops e Treinamentos</option>
+                                <option value="diversos">Eventos Diversos</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="privacy" required>
+                            <span>Concordo com a Política de Privacidade e em receber contato da equipe.</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn-contact-submit">
+                        Começar Grátis Agora <i class="ri-arrow-right-line"></i>
+                    </button>
+
+                    <div class="trust-badges-contact">
+                        <div class="trust-badge">
+                            <i class="ri-shield-check-line"></i>
+                            <span>100% Seguro</span>
+                        </div>
+                        <div class="trust-badge">
+                            <i class="ri-gift-line"></i>
+                            <span>14 dias grátis</span>
+                        </div>
+                        <div class="trust-badge">
+                            <i class="ri-close-circle-line"></i>
+                            <span>Sem cartão</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand-section">
+                    <img src="assets/images/logo.png" alt="Eventy3" class="footer-logo">
+                    <p class="footer-tagline">Eventy3: eventos que conectam fé e pessoas.</p>
+                    <p class="footer-copyright">© 2024 Eventy3. Todos os direitos reservados.</p>
+                </div>
+
+                <div class="footer-columns">
+                    <div class="footer-column">
+                        <h4>Produto</h4>
+                        <a href="#servicos">Funcionalidades</a>
+                        <a href="#planos">Planos e Preços</a>
+                        <a href="#depoimentos">Depoimentos</a>
+                        <a href="#ecosystem">Ecossistema</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Suporte</h4>
+                        <a href="#">Central de Ajuda</a>
+                        <a href="#">Tutoriais</a>
+                        <a href="#">Status</a>
+                        <a href="#">Contato</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Legal</h4>
+                        <a href="#">Termos de Uso</a>
+                        <a href="#">Privacidade</a>
+                        <a href="#">Cookies</a>
+                        <a href="#">LGPD</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Social</h4>
+                        <a href="#"><i class="ri-instagram-line"></i> Instagram</a>
+                        <a href="#"><i class="ri-youtube-line"></i> YouTube</a>
+                        <a href="#"><i class="ri-linkedin-line"></i> LinkedIn</a>
+                        <a href="#"><i class="ri-facebook-line"></i> Facebook</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODALS -->
+    <!-- ML3 Modal -->
+    <div class="galaxy-modal" id="modal-ml3">
+        <div class="modal-content">
+            <button class="close-modal-btn" onclick="closeModal('ml3')">
+                <i class="ri-close-line"></i>
+            </button>
+            <div class="modal-header-custom ml3-theme">
+                <i class="ri-line-chart-line"></i>
+                <h3>ML3 Financeiro</h3>
+            </div>
+            <div class="modal-body-custom">
+                <p class="hero-text">Gestão financeira calma e confiável para igrejas.</p>
+
+                <div class="modal-grid">
+                    <div class="modal-card-blue">
+                        <div class="modal-card-header">
+                            <i class="ri-bank-card-line icon-blue-lg"></i>
+                            <span class="modal-card-title">Conciliação IA</span>
+                        </div>
+                        <p class="modal-card-text">Automação completa de entradas e saídas bancárias.</p>
+                    </div>
+                    <div class="modal-card-blue">
+                        <div class="modal-card-header">
+                            <i class="ri-file-list-3-line icon-blue-lg"></i>
+                            <span class="modal-card-title">Relatórios</span>
+                        </div>
+                        <p class="modal-card-text">Fechamentos precisos em minutos após o culto.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Eventy3 Modal -->
+    <div class="galaxy-modal" id="modal-eventy3">
+        <div class="modal-content">
+            <button class="close-modal-btn" onclick="closeModal('eventy3')">
+                <i class="ri-close-line"></i>
+            </button>
+            <div class="modal-header-custom eventy3-theme">
+                <i class="ri-calendar-event-line"></i>
+                <h3>Eventy3</h3>
+            </div>
+            <div class="modal-body-custom">
+                <p class="hero-text">Eventos que conectam fé e pessoas. Organize com excelência.</p>
+
+                <div class="modal-grid">
+                    <div class="modal-card-yellow">
+                        <div class="modal-card-header">
+                            <i class="ri-ticket-2-line icon-yellow-lg"></i>
+                            <span class="modal-card-title">Ingressos</span>
+                        </div>
+                        <p class="modal-card-text">Venda via WhatsApp, QR Code e check-in rápido.</p>
+                    </div>
+                    <div class="modal-card-yellow">
+                        <div class="modal-card-header">
+                            <i class="ri-team-line icon-yellow-lg"></i>
+                            <span class="modal-card-title">Voluntários</span>
+                        </div>
+                        <p class="modal-card-text">Escalas, comunicação e gestão de equipes.</p>
+                    </div>
+                </div>
+
+                <a href="#planos" class="modal-cta-btn" onclick="closeModal('eventy3')">Ver Planos</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Crie3 Modal -->
+    <div class="galaxy-modal" id="modal-crie3">
+        <div class="modal-content">
+            <button class="close-modal-btn" onclick="closeModal('crie3')">
+                <i class="ri-close-line"></i>
+            </button>
+            <div class="modal-header-custom crie3-theme">
+                <i class="ri-palette-line"></i>
+                <h3>Crie3</h3>
+            </div>
+            <div class="modal-body-custom">
+                <p class="hero-text">Design profissional para igrejas em minutos.</p>
+
+                <div class="modal-grid">
+                    <div class="modal-card-pink">
+                        <div class="modal-card-header">
+                            <i class="ri-brush-line icon-pink-xl"></i>
+                            <span class="modal-card-title">Artes Prontas</span>
+                        </div>
+                        <p class="modal-card-text">Milhares de templates editáveis para redes sociais.</p>
+                    </div>
+                    <div class="modal-card-pink">
+                        <div class="modal-card-header">
+                            <i class="ri-robot-line icon-pink-xl"></i>
+                            <span class="modal-card-title">IA Geradora</span>
+                        </div>
+                        <p class="modal-card-text">Crie imagens exclusivas com inteligência artificial.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Cristão de Valor Modal -->
+    <div class="galaxy-modal" id="modal-cristao-valor">
+        <div class="modal-content">
+            <button class="close-modal-btn" onclick="closeModal('cristao-valor')">
+                <i class="ri-close-line"></i>
+            </button>
+            <div class="modal-header-custom center-theme">
+                <i class="ri-sun-line"></i>
+                <h3>Cristão de Valor</h3>
+            </div>
+            <div class="modal-body-custom">
+                <p class="hero-text">O ecossistema completo para o crescimento da sua igreja.</p>
+
+                <div class="modal-highlight-box">
+                    <p class="modal-text">Nossa missão é equipar a igreja brasileira com tecnologia de ponta, design de
+                        excelência e gestão eficiente.</p>
+                </div>
+
+                <div class="values-row">
+                    <span>Excelência</span>
+                    <span>Inovação</span>
+                    <span>Reino</span>
+                    <span>Serviço</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

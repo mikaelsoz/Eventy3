@@ -1,0 +1,14 @@
+{
+  "name": "eventy3",
+  "version": "1.0.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "npm ci --prefix iphone-3d-react && npm run build --prefix iphone-3d-react && rm -rf iphone-embed && cp -R iphone-3d-react/build iphone-embed",
+    "clean": "rm -rf iphone-embed iphone-3d-react/build iphone-3d-react/node_modules"
+  }
+}
+
