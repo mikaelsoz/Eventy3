@@ -77,6 +77,7 @@
 
         html {
             scroll-behavior: smooth;
+            scroll-padding-top: 100px;
         }
 
         body {
@@ -797,6 +798,77 @@
                 /* Restore scale on tablet+ */
                 z-index: 10;
             }
+        }
+
+        /* --- COMPARISON TABLE --- */
+        .comparison-wrapper {
+            overflow-x: auto;
+            margin-top: var(--space-xl);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            background: var(--color-white);
+            border: 1px solid var(--color-border);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: var(--space-md);
+            text-align: center;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .comparison-table th {
+            background: var(--color-bg-light);
+            font-weight: 700;
+            color: var(--color-text-primary);
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+        }
+
+        .comparison-table th.brand-col {
+            color: var(--color-indigo);
+            border-bottom: 3px solid var(--color-blue);
+            background: rgba(196, 160, 6, 0.05);
+        }
+
+        .comparison-table th:first-child,
+        .comparison-table td:first-child {
+            text-align: left;
+            padding-left: var(--space-lg);
+            font-weight: 600;
+            width: 30%;
+        }
+
+        .comparison-table td.highlight-cell {
+            background: rgba(196, 160, 6, 0.05);
+            font-weight: 600;
+            color: var(--color-indigo);
+        }
+
+        .comparison-table .check-icon {
+            color: #10B981;
+            /* Green */
+            font-size: 1.5rem;
+        }
+
+        .comparison-table .close-icon {
+            color: #EF4444;
+            /* Red */
+            font-size: 1.5rem;
+            opacity: 0.7;
+        }
+
+        .comparison-table .feature-sub {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--color-text-secondary);
+            font-weight: 400;
         }
 
         @media (min-width: 1024px) {
@@ -3896,6 +3968,10 @@
 
         .mt-xl {
             margin-top: var(--space-xl);
+        }
+
+        .mt-2xl {
+            margin-top: var(--space-2xl);
         }
 
         .text-secondary {
