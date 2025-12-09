@@ -2046,51 +2046,64 @@
             }
         }
 
-        /* --- 3D PROBLEM CARDS --- */
+        /* --- HOLOGRAPHIC PROBLEM CARDS --- */
         .problem-grid {
             perspective: 1500px;
         }
 
-        /* REMOVED - Conflicting with holographic effect
         .problem-card {
+            will-change: transform;
             position: relative;
             transform-style: preserve-3d;
-            transition: transform 0.1s ease-out, box-shadow 0.3s ease;
-            cursor: pointer;
             overflow: hidden;
+            /* Default variables */
+            --x: 50%;
+            --y: 50%;
+            --bg-x: 50%;
+            --bg-y: 50%;
+            cursor: pointer;
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease;
         }
 
+        .problem-card:hover {
+            transition: transform 0s, box-shadow 0.3s ease;
+        }
+
+        /* The Holographic Glow Overlay */
         .problem-card::before {
-            content: '';
+            content: "";
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%, rgba(255, 255, 255, 0.05) 100%);
+            background: radial-gradient(800px circle at var(--x) var(--y),
+                    rgba(255, 255, 255, 0.15) 0%,
+                    transparent 40%);
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.5s;
             pointer-events: none;
-            z-index: 1;
+            z-index: 10;
         }
 
         .problem-card:hover::before {
             opacity: 1;
         }
 
+        /* Border Glow Effect */
         .problem-card::after {
-            content: '';
+            content: "";
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(135deg, transparent 40%, rgba(255, 255, 255, 0.3) 50%, transparent 60%);
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(600px circle at var(--x) var(--y),
+                    rgba(255, 255, 255, 0.1),
+                    transparent 40%);
+            z-index: 1;
             opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-            z-index: 2;
-            transform: translateZ(10px);
+            transition: opacity 0.5s;
         }
 
         .problem-card:hover::after {
@@ -2098,26 +2111,29 @@
         }
 
         .problem-card:hover {
-            box-shadow: 0 20px 40px rgba(196, 160, 6, 0.15), 0 0 30px rgba(196, 160, 6, 0.1);
+            /* box-shadow: 0 0 20px rgba(0,0,0,0.1); */
         }
 
+        /* Ensure content is above glow */
         .problem-card>* {
             position: relative;
-            z-index: 3;
-        }
-
-        .problem-icon {
-            display: block;
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            transition: transform 0.3s ease;
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+            z-index: 20;
         }
 
         .problem-card:hover .problem-icon {
-            transform: scale(1.1) translateZ(20px);
+            transform: translateZ(50px);
+            transition: transform 0.3s ease;
         }
-        */
+
+        .problem-card:hover h3 {
+            transform: translateZ(30px);
+            transition: transform 0.3s ease;
+        }
+
+        .problem-card:hover p {
+            transform: translateZ(20px);
+            transition: transform 0.3s ease;
+        }
 
         /* --- ENHANCED TIMELINE ANIMATIONS --- */
         @keyframes subtle-fade {
@@ -2354,6 +2370,7 @@
 
         /* Planets Common */
         .planet {
+            will-change: transform;
             position: absolute;
             cursor: pointer;
             transition: transform 0.3s ease;

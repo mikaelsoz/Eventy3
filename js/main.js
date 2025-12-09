@@ -1,4 +1,5 @@
 
+
 function openModal(id) {
     const modal = document.getElementById('modal-' + id);
     if (modal) {
@@ -25,44 +26,58 @@ document.querySelectorAll('.galaxy-modal').forEach(modal => {
     });
 });
 
-// Collision detection for planets
-function checkCollisions() {
-    const planets = document.querySelectorAll('.planet:not(.sun)');
-    const threshold = 120; // Distance threshold for collision effect
+// Optimized Collision Detection (Batch Reads/Writes)
+let cachedPlanets = null;
 
-    planets.forEach((planet1, i) => {
-        planets.forEach((planet2, j) => {
-            if (i >= j) return; // Skip if same planet or already checked pair
-
-            const rect1 = planet1.getBoundingClientRect();
-            const rect2 = planet2.getBoundingClientRect();
-
-            const x1 = rect1.left + rect1.width / 2;
-            const y1 = rect1.top + rect1.height / 2;
-            const x2 = rect2.left + rect2.width / 2;
-            const y2 = rect2.top + rect2.height / 2;
-
-            const distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-
-            if (distance < threshold) {
-                // Add collision effect
-                if (!planet1.classList.contains('collision')) {
-                    planet1.classList.add('collision');
-                    setTimeout(() => planet1.classList.remove('collision'), 800);
-                }
-                if (!planet2.classList.contains('collision')) {
-                    planet2.classList.add('collision');
-                    setTimeout(() => planet2.classList.remove('collision'), 800);
-                }
-            }
-        });
-    });
-}
-
-// Check collisions periodically
-// Check collisions using requestAnimationFrame for better performance
 function animateCollisions() {
-    checkCollisions();
+    if (!cachedPlanets) {
+        // Cache DOM elements once (assuming they don't change count)
+        cachedPlanets = Array.from(document.querySelectorAll('.planet:not(.sun)'));
+    }
+
+    // 1. READ PHASE: Get all positions at once (One Layout Reflow)
+    const planetData = cachedPlanets.map(p => {
+        const rect = p.getBoundingClientRect();
+        return {
+            el: p,
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2,
+            collision: false
+        };
+    });
+
+    const threshold = 120;
+
+    // 2. COMPUTE PHASE (Pure JS)
+    for (let i = 0; i < planetData.length; i++) {
+        for (let j = i + 1; j < planetData.length; j++) {
+            const p1 = planetData[i];
+            const p2 = planetData[j];
+            const dx = p1.x - p2.x;
+            const dy = p1.y - p2.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < threshold) {
+                p1.collision = true;
+                p2.collision = true;
+            }
+        }
+    }
+
+    // 3. WRITE PHASE (Batch DOM Updates)
+    planetData.forEach(p => {
+        if (p.collision) {
+            // Only touch DOM if necessary check prevents redudant work,
+            // but reading classList logic is cheap compared to layout.
+            // Using check to avoid resetting timeout if reusing logic?
+            // Original logic: "if !contains { add; setTimeout(remove) }"
+            if (!p.el.classList.contains('collision')) {
+                p.el.classList.add('collision');
+                setTimeout(() => p.el.classList.remove('collision'), 800);
+            }
+        }
+    });
+
     requestAnimationFrame(animateCollisions);
 }
 requestAnimationFrame(animateCollisions);
@@ -70,27 +85,29 @@ requestAnimationFrame(animateCollisions);
 const mobileBtn = document.querySelector('.mobile-menu-btn');
 const navMenu = document.querySelector('.nav-menu');
 
-mobileBtn.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-    const icon = mobileBtn.querySelector('i');
-    if (navMenu.classList.contains('active')) {
-        icon.classList.remove('ri-menu-line');
-        icon.classList.add('ri-close-line');
-    } else {
-        icon.classList.remove('ri-close-line');
-        icon.classList.add('ri-menu-line');
-    }
-});
-
-// Close mobile menu on link click
-document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
+if (mobileBtn && navMenu) {
+    mobileBtn.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
         const icon = mobileBtn.querySelector('i');
-        icon.classList.remove('ri-close-line');
-        icon.classList.add('ri-menu-line');
+        if (navMenu.classList.contains('active')) {
+            icon.classList.remove('ri-menu-line');
+            icon.classList.add('ri-close-line');
+        } else {
+            icon.classList.remove('ri-close-line');
+            icon.classList.add('ri-menu-line');
+        }
     });
-});
+
+    // Close mobile menu on link click
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            const icon = mobileBtn.querySelector('i');
+            icon.classList.remove('ri-close-line');
+            icon.classList.add('ri-menu-line');
+        });
+    });
+}
 
 // Intersection Observer for Fade In and Timeline
 const observerOptions = {
@@ -131,29 +148,32 @@ document.querySelectorAll('.faq-question').forEach(question => {
 });
 
 // Form Handling
-document.getElementById('contactForm').addEventListener('submit', function (e) {
-    e.preventDefault();
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', function (e) {
+        e.preventDefault();
 
-    const btn = this.querySelector('button[type="submit"]');
-    const originalText = btn.innerText;
+        const btn = this.querySelector('button[type="submit"]');
+        const originalText = btn.innerText;
 
-    btn.innerText = 'Enviando...';
-    btn.disabled = true;
+        btn.innerText = 'Enviando...';
+        btn.disabled = true;
 
-    // Simulate sending
-    setTimeout(() => {
-        btn.innerText = 'Solicitação Enviada com Sucesso!';
-        btn.style.backgroundColor = '#4CAF50';
-
-        // Reset after 3 seconds
+        // Simulate sending
         setTimeout(() => {
-            this.reset();
-            btn.innerText = originalText;
-            btn.disabled = false;
-            btn.style.backgroundColor = '';
-        }, 3000);
-    }, 1500);
-});
+            btn.innerText = 'Solicitação Enviada com Sucesso!';
+            btn.style.backgroundColor = '#4CAF50';
+
+            // Reset after 3 seconds
+            setTimeout(() => {
+                this.reset();
+                btn.innerText = originalText;
+                btn.disabled = false;
+                btn.style.backgroundColor = '';
+            }, 3000);
+        }, 1500);
+    });
+}
 
 // Portfolio Filtering
 const filterBtns = document.querySelectorAll('.filter-btn');
@@ -211,87 +231,65 @@ if (phoneInput) {
 }
 
 // Form Handling with Validation and Success State
-document.getElementById('contactForm').addEventListener('submit', function (e) {
-    e.preventDefault();
+// Form Handling with Validation and Success State
+const contactFormDetail = document.getElementById('contactForm');
+if (contactFormDetail) {
+    contactFormDetail.addEventListener('submit', function (e) {
+        e.preventDefault();
 
-    const btn = this.querySelector('button[type="submit"]');
-    const originalContent = btn.innerHTML;
-    const form = this;
-    const successMsg = document.getElementById('successMessage');
+        const btn = this.querySelector('button[type="submit"]');
+        const originalContent = btn.innerHTML;
+        const form = this;
+        const successMsg = document.getElementById('successMessage');
 
-    // Basic Validation
-    const name = document.getElementById('name').value;
-    const whatsapp = document.getElementById('whatsapp').value;
+        // Basic Validation
+        const name = document.getElementById('name').value;
+        const whatsapp = document.getElementById('whatsapp').value;
 
-    if (whatsapp.length < 14) {
-        alert('Por favor, digite um número de WhatsApp válido.');
-        return;
-    }
-
-    // Loading State
-    btn.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Enviando...';
-    btn.disabled = true;
-
-    // Simulate sending
-    setTimeout(() => {
-        // Hide form, show success
-        form.style.display = 'none';
-        successMsg.style.display = 'block';
-
-        // Scroll to success message
-        successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-        // Reset form for next time (if page reloaded)
-        form.reset();
-    }, 2000);
-});
-
-// Header Scroll Effect
-window.addEventListener('scroll', () => {
-    const header = document.querySelector('.header');
-    if (window.scrollY > 50) {
-        header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
-        header.style.background = 'rgba(255, 255, 255, 0.98)';
-    } else {
-        header.style.boxShadow = 'var(--shadow-sm)';
-        header.style.background = 'rgba(255, 255, 255, 0.95)';
-    }
-});
-
-// 3D Problem Cards Animation
-const problemCards = document.querySelectorAll('.problem-card');
-
-problemCards.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-
-        const rotateX = (y - centerY) / centerY * -10;
-        const rotateY = (x - centerX) / centerX * 10;
-
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
-
-        // Update shine position
-        const shineX = (x / rect.width) * 100;
-        const shineY = (y / rect.height) * 100;
-        card.style.setProperty('--shine-x', `${shineX}%`);
-        card.style.setProperty('--shine-y', `${shineY}%`);
-
-        // Move shine overlay
-        const afterElement = card.querySelector('::after');
-        if (card.style.getPropertyValue('--mouse-x') !== undefined) {
-            card.style.setProperty('--mouse-x', `${x}px`);
-            card.style.setProperty('--mouse-y', `${y}px`);
+        if (whatsapp.length < 14) {
+            alert('Por favor, digite um número de WhatsApp válido.');
+            return;
         }
-    });
 
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+        // Loading State
+        btn.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Enviando...';
+        btn.disabled = true;
+
+        // Simulate sending
+        setTimeout(() => {
+            // Hide form, show success
+            form.style.display = 'none';
+            successMsg.style.display = 'block';
+
+            // Scroll to success message
+            successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            // Reset form for next time (if page reloaded)
+            form.reset();
+        }, 2000);
     });
+}
+
+// Header Scroll Effect - Optimized with rAF throttling
+const header = document.querySelector('.header');
+let isScrolling = false;
+
+window.addEventListener('scroll', () => {
+    if (!isScrolling) {
+        window.requestAnimationFrame(() => {
+            if (header) {
+                if (window.scrollY > 50) {
+                    header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+                    header.style.background = 'rgba(255, 255, 255, 0.98)';
+                } else {
+                    header.style.boxShadow = 'var(--shadow-sm)';
+                    header.style.background = 'rgba(255, 255, 255, 0.95)';
+                }
+            }
+            isScrolling = false;
+        });
+        isScrolling = true;
+    }
 });
 // --- NUMBER ANIMATION ---
 document.addEventListener('DOMContentLoaded', () => {
@@ -340,22 +338,25 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(counter);
     });
 });
-VanillaTilt.init(document.querySelectorAll(".tilt-card"), {
-    max: 15,
-    speed: 400,
-    glare: true,
-    "max-glare": 0.2,
-    scale: 1.02
-});
 
-// Also apply subtle tilt to other cards
-VanillaTilt.init(document.querySelectorAll(".bento-card:not(.tilt-card)"), {
-    max: 5,
-    speed: 400,
-    glare: true,
-    "max-glare": 0.1,
-    scale: 1.01
-});
+if (typeof VanillaTilt !== 'undefined') {
+    VanillaTilt.init(document.querySelectorAll(".tilt-card"), {
+        max: 15,
+        speed: 400,
+        glare: true,
+        "max-glare": 0.2,
+        scale: 1.02
+    });
+
+    // Also apply subtle tilt to other cards
+    VanillaTilt.init(document.querySelectorAll(".bento-card:not(.tilt-card)"), {
+        max: 5,
+        speed: 400,
+        glare: true,
+        "max-glare": 0.1,
+        scale: 1.01
+    });
+}
 
 // --- 3D CUBE INTERACTION ---
 (function () {
@@ -485,32 +486,70 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Simple 3D Rotation Effect on Problem Cards
-document.addEventListener('DOMContentLoaded', () => {
-    const cards = document.querySelectorAll('.problem-card');
+// --- HOLOGRAPHIC CARDS (Problem Section) ---
+const initHolographicCards = () => {
+    const problemCards = document.querySelectorAll('.problem-card');
 
-    cards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+    problemCards.forEach(card => {
+        let bounds;
+        let currentX, currentY;
+        let rafId = null;
 
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
+        const updateCard = () => {
+            if (!bounds) return;
+            const x = currentX - bounds.left;
+            const y = currentY - bounds.top;
 
-            // Calculate rotation
+            const centerX = bounds.width / 2;
+            const centerY = bounds.height / 2;
+
             const rotateX = (y - centerY) / 10;
             const rotateY = (centerX - x) / 10;
 
-            // Apply 3D transform
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            card.style.setProperty('--x', `${x}px`);
+            card.style.setProperty('--y', `${y}px`);
+            card.style.setProperty('--bg-x', `${(x / bounds.width) * 100}%`);
+            card.style.setProperty('--bg-y', `${(y / bounds.height) * 100}%`);
+            card.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+            rafId = null;
+        };
+
+        card.addEventListener('mouseenter', () => {
+            bounds = card.getBoundingClientRect();
+        });
+
+        card.addEventListener('mousemove', (e) => {
+            currentX = e.clientX;
+            currentY = e.clientY;
+            if (!bounds) bounds = card.getBoundingClientRect(); // Fallback
+
+            if (!rafId) {
+                rafId = requestAnimationFrame(updateCard);
+            }
         });
 
         card.addEventListener('mouseleave', () => {
-            // Reset rotation
-            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+            if (rafId) {
+                cancelAnimationFrame(rafId);
+                rafId = null;
+            }
+            card.style.transform = 'perspective(600px) rotateX(0deg) rotateY(0deg)';
+            card.style.setProperty('--x', `50%`);
+            card.style.setProperty('--y', `50%`);
+            card.style.setProperty('--bg-x', '50%');
+            card.style.setProperty('--bg-y', '50%');
         });
     });
-});
+};
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHolographicCards);
+} else {
+    initHolographicCards();
+}
+
+
+
 
 
