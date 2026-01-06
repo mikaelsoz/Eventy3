@@ -549,7 +549,40 @@ if (document.readyState === 'loading') {
     initHolographicCards();
 }
 
+// --- ROTATING TEXT ANIMATION ---
+(function initRotatingText() {
+    const words = document.querySelectorAll('.rotating-word');
+    if (words.length === 0) return;
 
+    let currentIndex = 0;
 
+    // Show first word immediately
+    words[0].classList.add('active');
 
+    function rotateWords() {
+        const current = words[currentIndex];
+        const nextIndex = (currentIndex + 1) % words.length;
+        const next = words[nextIndex];
+
+        // Exit current word
+        current.classList.add('exit');
+        current.classList.remove('active');
+
+        // Enter next word
+        setTimeout(() => {
+            next.classList.add('active');
+            next.classList.remove('exit');
+
+            // Clean up previous word
+            setTimeout(() => {
+                current.classList.remove('exit');
+            }, 500);
+        }, 100);
+
+        currentIndex = nextIndex;
+    }
+
+    // Rotate every 2.5 seconds
+    setInterval(rotateWords, 2500);
+})();
 
